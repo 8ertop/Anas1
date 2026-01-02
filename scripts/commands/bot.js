@@ -1,31 +1,53 @@
+const fs = require('fs-extra');
+const axios = require('axios');
+
+// تعريف معلومات الأمر
 module.exports.config = {
-  name: "bot",
-  version: "0.0.2",
-  permission: 0,
-  prefix: false,
-  credits: "Rahad",
-  description: "fun",
-  category: "admin",
-  usages: "",
+  name: 'المطور',
+  version: '1.0.0',
+  hasPermssion: 0,
+  credits: '',
+  description: 'معلومات عن مطور البوت.',
+  commandCategory: '〘 المجموعات 〙',
+  usages: '〘 المطور 〙',
+  usePrefix: false,
   cooldowns: 5,
+  dependencies: {
+    'fs-extra': '',
+    axios: ''
+  }
 };
 
-module.exports.run = async function({ api, event, args, Users }) {
-    const axios = require("axios");
-    const request = require("request");
-    const fs = require("fs-extra");
-    const prompt = args.join(" ");
-    var id = event.senderID;
-    var name = await 
-Users.getNameUser(event.senderID);
-    var tl = ["আমি এখন জয় বস এর সাথে বিজি আছি", "what are you asking me to do?", "I love you baby meye hole chipay aso", "Love you 3000-😍💋💝", "ji bolen ki korte pari ami apnar jonno?","আমাকে না ডেকে আমার বস জয়কে ডাকেন! link: https://www.facebook.com/100001435123762", "Ato daktasen kn bujhlam na 😡", "jan bal falaba,🙂","ask amr mon vlo nei dakben na🙂", "Hmm jan ummah😘😘","jang hanga korba 🙂🖤","iss ato dako keno lojja lage to 🫦🙈","suna tomare amar valo lage,🙈😽","জি তুমি কি আমাকে ডেকেছো 😇🖤🥀","আমাকে আমাকে না ডেকে আমার বসকে ডাকো এই নেও LINK :- https://www.facebook.com/100001435123762","Hmmm sona 🖤 meye hoile kule aso ar sele hoile kule new 🫂😘","Yah This Bot creator : ITS,JOY ((J.T))     link => https://www.facebook.com/100001435123762","হা বলো, শুনছি আমি 🤸‍♂️🫂","আহ শোনা আমার আমাকে এতো ডাক্তাছো কেনো আসো বুকে আশো🙈", "তুমি কি আমাকে ডাকলে বন্ধু 🤖?", "I love you 💝", "ভালোবাসি তোমাকে 🤖", "Hi, I'm massanger Bot i can help you.?🤖","Use callad to contact admin!", "Hi, Don't disturb 🤖 🚘Now I'm going to Feni,Bangladesh..bye", "Hi, 🤖 i can help you~~~~"];
-    var rand = tl[Math.floor(Math.random() * tl.length)];
-    if (!prompt) return api.sendMessage(`╭────────────❍\n╰➤ 👤 𝐃𝐞𝐚𝐫 『${name}』,\n╰➤ 🗣️ ${rand}\n╰─────────────────➤`, event.threadID, event.messageID);
-    const res = await axios.get(`https://simsimi.fun/api/v2/?mode=talk&lang=bn&message=${prompt}&filter=true`);
-    console.log(res.data);
-    const respond = res.data.success;
+// دالة تنفيذ الأمر
+module.exports.run = async ({ api, event }) => {
+  const imageUrls = [
+    'https://files.catbox.moe/xfponh.jpg',
+    'https://files.catbox.moe/twpm8d.jpg'
+  ];
+  const cachePath = __dirname + '/cache/developer.jpg';
 
-    return api.sendMessage({
-        body: respond
-    }, event.threadID, event.messageID);
+  // اختيار صورة عشوائية
+  const selectedImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+
+  // دالة لإرسال الرسالة مع الصورة
+  const sendMessage = () => {
+    api.sendMessage(
+      {
+        body: `〘━━━━━❪ المطور ❫━━━━〙\n\n⦿¦✗¦←الاسم: ᎯᏁᎯᏚ ᎯᏞᏚᎯᎡᏫᏌᎡᎥ\n\n⦿¦✗¦←العمر : 20\n\n⦿¦✗¦←البلد: اليمن 🇾🇪\n\n⌔┇↜{ المـــطــور } ← m.me/61572167800906\n\n⌔┇↜{ انستقرام } ← https://www.instagram.com/shblsd3829?igsh=MTY2YWdwY3I5MTZoZg==\n\n| ⚠️ |اذا حدث خطا تواصل معا المطور\n\nاكتب [.تقرير]\n\n〘━━━❪ anas🕸🕷 ❫━━━〙`,
+        attachment: fs.createReadStream(cachePath)
+      },
+      event.threadID,
+      () => fs.unlinkSync(cachePath) // حذف الملف المؤقت بعد الإرسال
+    );
+  };
+
+  // تنزيل الصورة وإرسال الرسالة
+  axios.get(encodeURI(selectedImage), { responseType: 'stream' })
+    .then(response => {
+      response.data.pipe(fs.createWriteStream(cachePath))
+        .on('close', sendMessage);
+    })
+    .catch(error => {
+      api.sendMessage('حدث خطأ أثناء تنزيل الصورة، حاول مرة أخرى لاحقًا.', event.threadID);
+    });
 };

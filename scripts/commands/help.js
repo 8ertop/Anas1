@@ -133,7 +133,7 @@ module.exports.run = async function ({ api, event, args }) {
 
   const randomQuote = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
 
-  msg += `├─────☾⋆\n│ » إجمالي الأوامر: [ ${commands.size} ]\n│「 ☾⋆ البادئة: ${global.config.PREFIX} 」\n╰──────────⧕\n\nحقيقة عشوائية: ${randomQuote}\n\nالمالك: جوي أحمد`;
+  msg += `├─────☾⋆\n│ » إجمالي الأوامر: [ ${commands.size} ]\n│「 ☾⋆ البادئة: ${global.config.PREFIX} 」\n╰──────────⧕\n\nحقيقة عشوائية: ${randomQuote}\n\nالمالك أنس السروري `;
 
   return api.shareContact(msg, api.getCurrentUserID(), event.threadID);
 };

@@ -1,11 +1,11 @@
 module.exports.config = {
-  name: "help",
+  name: "مساعدة",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "august",
-  description: "Guide for new users",
-  category: "system",
-  usages: "/help",
+  credits: "أوغست",
+  description: "دليل للمستخدمين الجدد",
+  category: "نظام",
+  usages: "/مساعدة",
   prefix: true,
   premium: false,
   cooldowns: 5
@@ -14,7 +14,8 @@ module.exports.config = {
 const mathSansBold = {
   A: "𝗔", B: "𝗕", C: "𝗖", D: "𝗗", E: "𝗘", F: "𝗙", G: "𝗚", H: "𝗛", I: "𝗜",
   J: "𝗝", K: "𝗞", L: "𝗟", M: "𝗠", N: "𝗡", O: "𝗢", P: "𝗣", Q: "𝗤", R: "𝗥",
-  S: "𝗦", T: "𝗧", U: "𝗨", V: "𝗩", W: "𝗪", X: "𝗫", Y: "𝗬", Z: "𝗭", a: "𝗮", b: "𝗯", c: "𝗰", d: "𝗱", e: "𝗲", f: "𝗳", g: "𝗴", h: "𝗵", i: "𝗶",
+  S: "𝗦", T: "𝗧", U: "𝗨", V: "𝗩", W: "𝗪", X: "𝗫", Y: "𝗬", Z: "𝗭",
+  a: "𝗮", b: "𝗯", c: "𝗰", d: "𝗱", e: "𝗲", f: "𝗳", g: "𝗴", h: "𝗵", i: "𝗶",
   j: "𝗷", k: "𝗸", l: "𝗹", m: "𝗺", n: "𝗻", o: "𝗼", p: "𝗽", q: "𝗾", r: "𝗿",
   s: "𝘀", t: "𝘁", u: "𝘂", v: "𝘃", w: "𝘄", x: "𝘅", y: "𝘆", z: "𝘇"
 };
@@ -23,9 +24,9 @@ module.exports.handleEvent = function ({ api, event, getText }) {
   const { commands } = global.client;
   const { threadID, messageID, body } = event;
 
-  if (!body || typeof body !== "string" || !body.includes("commands")) return;
+  if (!body || typeof body !== "string" || !body.includes("الأوامر")) return;
 
-  const splitBody = body.slice(body.indexOf("commands")).trim().split(/\s+/);
+  const splitBody = body.slice(body.indexOf("الأوامر")).trim().split(/\s+/);
   if (splitBody.length < 2 || !commands.has(splitBody[1].toLowerCase())) return;
 
   const threadSetting = global.data.threadData.get(parseInt(threadID)) || {};
@@ -41,10 +42,10 @@ module.exports.handleEvent = function ({ api, event, getText }) {
       command.config.category,
       command.config.cooldowns,
       command.config.hasPermission === 0
-        ? getText("user")
+        ? getText("مستخدم")
         : command.config.hasPermission === 1
-        ? getText("adminGroup")
-        : getText("adminBot"),
+        ? getText("مدير_المجموعة")
+        : getText("مدير_البوت"),
       command.config.credits
     ),
     threadID,
@@ -73,7 +74,7 @@ module.exports.run = async function ({ api, event, args }) {
     categorizedCommands.get(categoryName).push(`│ ✧ ${value.config.name}`);
   }
 
-  let msg = `Hey ${userName}, these are commands that may help your assignments and essays:\n`;
+  let msg = `مرحباً ${userName}، هذه الأوامر قد تساعدك في واجباتك ومقالاتك:\n`;
 
   for (const categoryName of categories) {
     const categoryNameSansBold = categoryName.split("").map(c => mathSansBold[c] || c).join("");
@@ -83,56 +84,56 @@ module.exports.run = async function ({ api, event, args }) {
   }
 
   const randomQuotes = [
-    "Octopuses have three hearts: two pump blood to the gills, and one pumps it to the rest of the body.",
-    "Honey never spoils; archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old.",
-    "The world's oldest known recipe is for beer.",
-    "Bananas are berries, but strawberries are not.",
-    "Cows have best friends and can become stressed when they are separated.",
-    "The shortest war in history was between Britain and Zanzibar on August 27, 1896; Zanzibar surrendered after 38 minutes.",
-    "The average person walks the equivalent of three times around the world in a lifetime.",
-    "Polar bears are left-handed.",
-    "The unicorn is Scotland's national animal.",
-    "A group of flamingos is called a 'flamboyance'.",
-    "There are more possible iterations of a game of chess than there are atoms in the known universe.",
-    "The smell of freshly-cut grass is actually a plant distress call.",
-    "A day on Venus is longer than its year.",
-    "Honeybees can recognize human faces.",
-    "Wombat poop is cube-shaped.",
-    "The first oranges weren't orange.",
-    "The longest time between two twins being born is 87 days.",
-    "A bolt of lightning is six times hotter than the sun.",
-    "A baby puffin is called a puffling.",
-    "A jiffy is an actual unit of time: 1/100th of a second.",
-    "The word 'nerd' was first coined by Dr. Seuss in 'If I Ran the Zoo'.",
-    "There's a species of jellyfish that is biologically immortal.",
-    "The Eiffel Tower can be 6 inches taller during the summer due to the expansion of the iron.",
-    "The Earth is not a perfect sphere; it's slightly flattened at the poles and bulging at the equator.",
-    "A hummingbird weighs less than a penny.",
-    "Koalas have fingerprints that are nearly identical to humans'.",
-    "There's a town in Norway where the sun doesn't rise for several weeks in the winter, and it doesn't set for several weeks in the summer.",
-    "A group of owls is called a parliament.",
-    "The fingerprints of a koala are so indistinguishable from humans' that they have on occasion been confused at a crime scene.",
-    "The Hawaiian alphabet has only 13 letters.",
-    "The average person spends six months of their life waiting for red lights to turn green.",
-    "A newborn kangaroo is about 1 inch long.",
-    "The oldest known living tree is over 5,000 years old.",
-    "Coca-Cola would be green if coloring wasn't added to it.",
-    "A day on Mars is about 24.6 hours long.",
-    "The Great Wall of China is not visible from space without aid.",
-    "A group of crows is called a murder.",
-    "There's a place in France where you can witness an optical illusion that makes you appear to grow and shrink as you walk down a hill.",
-    "The world's largest desert is Antarctica, not the Sahara.",
-    "A blue whale's heart is so big that a human could swim through its arteries.",
-    "The longest word in the English language without a vowel is 'rhythms'.",
-    "Polar bears' fur is not white; it's actually transparent.",
-    "The electric chair was invented by a dentist.",
-    "An ostrich's eye is bigger than its brain.",
-    "Wombat poop is cube-shaped."
+    "تمتلك الأخطبوط ثلاثة قلوب: اثنان يضخان الدم إلى الخياشيم، والثالث يضخه إلى باقي الجسم.",
+    "العسل لا يفسد أبداً؛ فقد عثر علماء الآثار على أواني عسل في مقابر مصرية قديمة يزيد عمرها عن 3000 سنة.",
+    "أقدم وصفة معروفة في العالم هي وصفة لصنع البيرة.",
+    "الموز يُعتبر من الثمار (berry)، بينما الفراولة ليست كذلك.",
+    "للأبقار أصدقاء مقربون وتتوتر عند فصلها عنهم.",
+    "أقصر حرب في التاريخ كانت بين بريطانيا وزنجبار في 27 أغسطس 1896؛ استسلمت زنجبار بعد 38 دقيقة فقط.",
+    "يمشي الشخص العادي في حياته مسافة تعادل ثلاث مرات حول العالم.",
+    "الدببة القطبية تستخدم يدها اليسرى بشكل أساسي.",
+    "الحيوان الوطني لاسكتلندا هو وحيد القرن.",
+    "يُطلق على مجموعة من طيور الفلامنغو اسم 'flamboyance' (تألق).",
+    "عدد التسلسلات الممكنة في لعبة الشطرنج أكبر من عدد الذرات في الكون المرصود.",
+    "رائحة العشب المقطوع حديثاً هي في الحقيقة إشارة استغاثة من النبات.",
+    "يوم واحد على كوكب الزهرة أطول من سنته.",
+    "تستطيع نحلات العسل التعرف على وجوه البشر.",
+    "براز الومبت على شكل مكعبات.",
+    "البرتقال لم يكن برتقالي اللون في الأصل.",
+    "أطول فترة بين ولادة توأمين هي 87 يوماً.",
+    "صاعقة البرق أسخن من سطح الشمس بست مرات.",
+    "يُطلق على صغير البفن اسم puffling.",
+    "كلمة 'jiffy' هي وحدة زمنية حقيقية: تعادل 1/100 من الثانية.",
+    "كلمة 'nerd' ظهرت أول مرة في كتاب الدكتور سوس 'If I Ran the Zoo'.",
+    "هناك نوع من قناديل البحر يُعتبر خالد بيولوجياً.",
+    "برج إيفل يصبح أطول بحوالي 15 سم في الصيف بسبب تمدد الحديد.",
+    "الأرض ليست كرة مثالية؛ إنها مفلطحة قليلاً عند القطبين ومنتفخة عند خط الاستواء.",
+    "طائر الطنان أخف وزناً من بنس واحد.",
+    "بصمات الكوالا شبه مطابقة لبصمات الإنسان.",
+    "توجد بلدة في النرويج لا تشرق فيها الشمس لأسابيع في الشتاء ولا تغرب لأسابيع في الصيف.",
+    "يُطلق على مجموعة من البوم اسم 'برلمان'.",
+    "بصمات الكوالا أحياناً تُخلط مع بصمات الإنسان في مسرح الجريمة.",
+    "الأبجدية الهاوايية تحتوي على 13 حرفاً فقط.",
+    "يقضي الشخص العادي حوالي ستة أشهر من حياته في انتظار تحول الإشارة المرورية إلى اللون الأخضر.",
+    "صغير الكنغر عند الولادة طوله حوالي 2.5 سم فقط.",
+    "أقدم شجرة حية معروفة يزيد عمرها عن 5000 سنة.",
+    "مشروب كوكاكولا كان سيكون أخضر اللون لولا إضافة الألوان.",
+    "يوم واحد على كوكب المريخ يستمر حوالي 24.6 ساعة.",
+    "سور الصين العظيم لا يُرى من الفضاء بالعين المجردة.",
+    "يُطلق على مجموعة من الغربان اسم 'قتل'.",
+    "يوجد مكان في فرنسا يُسبب وهماً بصرياً يجعلك تبدو كأنك تكبر وتصغر وأنت تمشي في منحدر.",
+    "أكبر صحراء في العالم هي القارة القطبية الجنوبية (أنتاركتيكا)، وليست الصحراء الكبرى.",
+    "قلب الحوت الأزرق كبير لدرجة أن الإنسان يمكنه السباحة داخل شرايينه.",
+    "أطول كلمة في اللغة الإنجليزية بدون حرف علة هي 'rhythms'.",
+    "فراء الدببة القطبية ليس أبيض؛ إنه شفاف فعلياً.",
+    "كرسي الكهرباء اخترعه طبيب أسنان.",
+    "عين النعامة أكبر من دماغها.",
+    "براز الومبت على شكل مكعبات."
   ];
 
   const randomQuote = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
 
-  msg += `├─────☾⋆\n│ » Total commands: [ ${commands.size} ]\n│「 ☾⋆ PREFIX: ${global.config.PREFIX} 」\n╰──────────⧕\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}\n\nOwner: JOY AHMED`;
+  msg += `├─────☾⋆\n│ » إجمالي الأوامر: [ ${commands.size} ]\n│「 ☾⋆ البادئة: ${global.config.PREFIX} 」\n╰──────────⧕\n\nحقيقة عشوائية: ${randomQuote}\n\nالمالك: جوي أحمد`;
 
   return api.shareContact(msg, api.getCurrentUserID(), event.threadID);
 };
